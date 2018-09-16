@@ -17,6 +17,7 @@ class HomeController {
     /*
     * 列出日志对象
     * */
+
     def listSystemLog() {
         def systemLogList = SystemLog.list(params)
         println("${systemLogList}")
@@ -30,6 +31,7 @@ class HomeController {
     /*
     * 列出会话对象
     * */
+
     def listSystemChat() {
         def systemChatList = SystemChat.list(params)
         println("${systemChatList}")
@@ -43,6 +45,7 @@ class HomeController {
     /*
     * 获取系统菜单
     * */
+
     def getSystemMenuTree(SystemMenu systemMenu) {
         def data = systemMenu.menuItems
         println("查询---菜单${data}")
@@ -61,6 +64,7 @@ class HomeController {
     /*
     * 获取系统菜单
     * */
+
     def private getSystemMenuTreeMap(SystemMenu systemMenu) {
         def data = systemMenu.menuItems
         println("查询---菜单${data}")
@@ -75,6 +79,7 @@ class HomeController {
     /*
     * 列出系统菜单
     * */
+
     private void listSystemMenu() {
         //根据用户的属性，设置菜单
         params.user = session.systemUser
@@ -82,7 +87,7 @@ class HomeController {
 
         //新思路
         def systemMenuListAtHome = []
-        systemMenuList.each { item->
+        systemMenuList.each { item ->
             def arrayItem = [:]
 
             //第一层
@@ -109,11 +114,12 @@ class HomeController {
     /*
     * 退出登录
     * */
+
     def logout() {
         def pscontext = request.session.servletContext
         Map serviceMap = pscontext.getAttribute("systemUserList")
         if (session.systemUser) {
-            systemLogService.recordLog(session, request, params)
+            systemCommonService.recordLog(session, request, params)
             serviceMap.remove(session.systemUser.userName)
             println("${session.systemUser.userName}退出...")
         }
@@ -122,12 +128,14 @@ class HomeController {
         session.invalidate()
         //redirect(uri: "/")
         println("拜拜...${logoutUser}")
-        model: [logoutUser: logoutUser]
+        model:
+        [logoutUser: logoutUser]
     }
 
     /*
     * 登录
     * */
+
     def login() {
         String userName = params.userName;
         String p = params.password.encodeAsMD5()
@@ -155,11 +163,13 @@ class HomeController {
     /*
     * 显示登录界面
     * */
+
     def loginUI() {}
 
     /*
     * 登记登录用户
     * */
+
     def registeUserInSession(user) {
         def pscontext = request.session.servletContext
         Map serviceMap = pscontext.getAttribute("systemUserList")
@@ -175,9 +185,10 @@ class HomeController {
     }
 
     def index() {
-        def messageToMe = SystemChat.findAllBySpeakTo("${session.systemUser}", max:5)
+        def messageToMe = SystemChat.findAllBySpeakTo("${session.systemUser}", max: 5)
         println("交流信息：  ${messageToMe}")
-        model:[
+        model:
+        [
                 messageToMe: messageToMe
         ]
     }

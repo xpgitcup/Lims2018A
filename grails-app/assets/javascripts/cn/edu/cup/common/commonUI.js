@@ -11,7 +11,74 @@ var pageSize = 10
 * */
 
 /*
-* 通用的tab页管理函数
+* 通用的tab页管理函数---不包括翻页控制
+* */
+
+function tabPagesManagerWithPagination(tabsName, tabNameList, listFunction, countFunction) {
+
+    // 初始设置
+    var defaultTab = tabNameList[0];
+    var currentTab = readCookie("current" + tabsName, defaultTab);
+    var tabsDiv = $("#" + tabsName);
+
+    var countFunction = eval(countFunction);
+    var listFunction = eval(listFunction);
+
+    //动态创建各个标签页
+    console.info(tabNameList);
+    for (x in tabNameList) {
+        console.info("创建：" + x);
+        var title = tabNameList[x];
+
+        tabsDiv.tabs('add', {
+            title: title,
+            closable:false
+        })
+
+        //插入到tab中
+        tabsDiv.tabs('select', x)
+        var tab = tabsDiv.tabs('getSelected');
+        //显示页面
+        var listDiv = $('<div>' + title + '</div>');
+        listDiv.attr('id', 'list' + title + 'Div');
+        listDiv.appendTo(tab)
+        //分页Div
+        var paginationDiv = $('<div class="easyui-pagination"></div>');
+        paginationDiv.attr('id', 'pagination' + title + 'Div');
+        paginationDiv.appendTo(tab)
+        //分页设置
+        var total = countFunction(title)
+        paginationDiv.pagination({
+            pagesize: pageSize,
+            total: total,
+            onSelectPage: function (pageNumber, pageSize) {
+                var ct = tabsDiv.tabs('getSelected').panel('options').title;    //这一句是关键啊
+                console.info("翻页：" + ct);
+                listFunction(ct, pageNumber, pageSize)
+            }
+        })
+    }
+
+    // 设置标签管理函数
+    tabsDiv.tabs({
+            onSelect: function (title, index) {
+                //记录tabs的缺省页面，所以采用tabsName
+                console.info(tabsName + "--选择标签：" + title + "--" + index);
+                $.cookie("current" + tabsName, title, {path: '/'});
+                //------------------------------------------------------------------------------------------------------
+                loadFirstData(title, listFunction);
+            }
+        }
+    );
+
+    // 打开缺省的标签
+    tabsDiv.tabs("select", currentTab);
+    loadFirstData(currentTab, listFunction);
+
+}
+
+/*
+* 通用的tab页管理函数---不包括翻页控制
 * */
 
 function tabPagesManager(tabsName, tabNameList, listFunction) {
@@ -38,45 +105,14 @@ function tabPagesManager(tabsName, tabNameList, listFunction) {
 }
 
 function loadFirstData(title, listFunction) {
-    var tabPagination = "paginationListAppsDiv" + title;
-    var tp = $("#" + tabPagination);
-    console.info("加载数据..." + tabPagination + tp);
-    tp.pagination('refresh');
+    //var tabPagination = "paginationListAppsDiv" + title;
+    //var tp = $("#" + tabPagination);
+    //console.info("加载数据..." + tabPagination + tp);
+    //tp.pagination('refresh');
     var page = readCookie("curregtPage" + title, 1);
     var listFunction = eval(listFunction);
     listFunction(title, page, pageSize);
 }
-
-/*
-    //循环设置各个分页---这是设置
-    for (var i = 0; i < tabNameList.length; i++) {
-        var title = tabNameList[i].trim();
-        var tabDiv = $("#" + paginationDiv +  title);
-
-        var currentPage = readCookie("currentPage" + title, 1);
-        var cpageSize = readCookie("pageSize" + title, pageSize);
-        var totalCount = countFunction(title);
-
-        console.info("具体设置标签页:" + title + tabDiv + "具体参数：" + currentPage + "/" + cpageSize);
-
-        //分页
-        tabDiv.pagination({
-            pageSize: cpageSize,
-            total: totalCount,
-            showPageList: true,
-            displayMsg: '',
-            layout: ['first', 'prev', 'links', 'next', 'last'],
-            //翻页函数
-            onSelectPage: function (pageNumber, pageSize) {
-                console.info("调用来自onSelectPage:" + pageNumber + "/" + cpageSize);
-                listFunction(title, pageNumber, pageSize);
-                $.cookie("currentPgae" + title, pageNumber);
-                $.cooke("pageSize" + title, cpageSize);
-            }
-        });
-    }
-
-* */
 
 /*
 * 加载页面的数据
