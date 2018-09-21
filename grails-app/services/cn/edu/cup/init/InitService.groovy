@@ -193,7 +193,7 @@ class InitService {
             //----------------------------------------------------------------------------------------------------------
             def m35 = new SystemMenu(
                     menuContext: "数据字典A维护",
-                    menuAction: "operation4Dictionary/index",
+                    menuAction: "operation4Data/index",
                     menuDescription: "维护数据字典（新）",
                     upMenuItem: m3,
                     menuOrder: 0
