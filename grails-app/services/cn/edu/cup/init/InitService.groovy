@@ -1,5 +1,7 @@
 package cn.edu.cup.init
 
+import cn.edu.cup.dictionary.DataDictionary
+import cn.edu.cup.dictionary.DataDictionaryService
 import cn.edu.cup.system.SystemAttribute
 import cn.edu.cup.system.SystemCarousel
 import cn.edu.cup.system.SystemChat
@@ -15,6 +17,9 @@ import lims2018a.Application
 class InitService {
 
     def dataSource
+    def dataDictionaryService
+    def systemMenuService
+    def commonService
 
     //加载数据库初始化脚本
     def loadScripts(String dir) {
@@ -73,7 +78,8 @@ class InitService {
                     roleAttribute: "底层管理",
                     menuOrder: 100
             )
-            m0.save(true)
+            //m0.save(true)
+            systemMenuService.save(m0)
             //----------------------------------------------------------------------------------------------------------
             //创建正对各个域类控制器的菜单
             domains.sort()
@@ -86,7 +92,8 @@ class InitService {
                         roleAttribute: "底层管理",
                         menuOrder: 0
                 )
-                m01.save(true)
+                //m01.save(true)
+                systemMenuService.save(m01)
             }
             def m011 = new SystemMenu(
                     menuContext: "系统状态",
@@ -96,7 +103,8 @@ class InitService {
                     roleAttribute: "底层管理",
                     menuOrder: 0
             )
-            m011.save(true)
+            //m011.save(true)
+            systemMenuService.save(m011)
             //----------------------------------------------------------------------------------------------------------
             def m1 = new SystemMenu(
                     menuContext: "系统维护",
@@ -106,7 +114,8 @@ class InitService {
                     roleAttribute: "系统维护",
                     menuOrder: 0
             )
-            m1.save(true)
+            //m1.save(true)
+            systemMenuService.save(m1)
             //----------------------------------------------------------------------------------------------------------
             def m11 = new SystemMenu(
                     menuContext: "属性维护",
@@ -115,7 +124,8 @@ class InitService {
                     upMenuItem: m1,
                     menuOrder: 0
             )
-            m11.save(true)
+            //m11.save(true)
+            systemMenuService.save(m11)
             //----------------------------------------------------------------------------------------------------------
             def m12 = new SystemMenu(
                     menuContext: "用户维护",
@@ -124,7 +134,8 @@ class InitService {
                     upMenuItem: m1,
                     menuOrder: 0
             )
-            m12.save(true)
+            //m12.save(true)
+            systemMenuService.save(m12)
             //----------------------------------------------------------------------------------------------------------
             def m13 = new SystemMenu(
                     menuContext: "菜单维护",
@@ -133,7 +144,8 @@ class InitService {
                     upMenuItem: m1,
                     menuOrder: 0
             )
-            m13.save(true)
+            //m13.save(true)
+            systemMenuService.save(m13)
             //----------------------------------------------------------------------------------------------------------
             def m14 = new SystemMenu(
                     menuContext: "日志维护",
@@ -142,7 +154,8 @@ class InitService {
                     upMenuItem: m1,
                     menuOrder: 0
             )
-            m14.save(true)
+            //m14.save(true)
+            systemMenuService.save(m14)
             //----------------------------------------------------------------------------------------------------------
             def m2 = new SystemMenu(
                     menuContext: "公共服务",
@@ -152,7 +165,8 @@ class InitService {
                     roleAttribute: "公共服务",
                     menuOrder: 0
             )
-            m2.save(true)
+            //m2.save(true)
+            systemMenuService.save(m2)
             //----------------------------------------------------------------------------------------------------------
             def m21 = new SystemMenu(
                     menuContext: "社区沟通",
@@ -161,7 +175,8 @@ class InitService {
                     upMenuItem: m2,
                     menuOrder: 0
             )
-            m21.save(true)
+            //m21.save(true)
+            systemMenuService.save(m21)
             //----------------------------------------------------------------------------------------------------------
             def m3 = new SystemMenu(
                     menuContext: "基础数据",
@@ -171,7 +186,8 @@ class InitService {
                     roleAttribute: "系统维护",
                     menuOrder: 0
             )
-            m3.save(true)
+            //m3.save(true)
+            systemMenuService.save(m3)
             //----------------------------------------------------------------------------------------------------------
             def m33 = new SystemMenu(
                     menuContext: "单位维护",
@@ -181,6 +197,7 @@ class InitService {
                     menuOrder: 0
             )
             m33.save(true)
+            systemMenuService.save(m0)
             //----------------------------------------------------------------------------------------------------------
             def m34 = new SystemMenu(
                     menuContext: "用户库维护",
@@ -190,6 +207,7 @@ class InitService {
                     menuOrder: 0
             )
             m34.save(true)
+            systemMenuService.save(m0)
             //----------------------------------------------------------------------------------------------------------
             def m35 = new SystemMenu(
                     menuContext: "数据字典A维护",
@@ -199,6 +217,7 @@ class InitService {
                     menuOrder: 0
             )
             m35.save(true)
+            systemMenuService.save(m0)
             //----------------------------------------------------------------------------------------------------------
             def m36 = new SystemMenu(
                     menuContext: "数据A维护",
@@ -208,6 +227,7 @@ class InitService {
                     menuOrder: 0
             )
             m36.save(true)
+            systemMenuService.save(m0)
             //----------------------------------------------------------------------------------------------------------
             //----------------------------------------------------------------------------------------------------------
             def m4 = new SystemMenu(
@@ -271,7 +291,7 @@ class InitService {
         //对话
         fillSampleChat()
         //数据字典
-        //fillSampleDataKey()
+        fillSampleDataKey()
         //程序标题
         fillSampleTitle()
         //用户类库
@@ -317,7 +337,14 @@ class InitService {
 
     private void fillSampleDataKey() {
         println("测试数据字典的数据...")
-        def dw = ["kg", "m", "s", "MPa", "m^3/s", "kg/s"]
+        def dataDictionary = new DataDictionary(
+                name: "测试性数据字典1"
+        )
+        dataDictionaryService.save(dataDictionary)
+        commonService.exportObjectList2DataTable(dataDictionary)
+        def dlist = DataDictionary.list()
+        def d = commonService.exportObjectList2DataTable(dlist)
+        println("${d}")
     }
 
     private void fillSampleChat() {

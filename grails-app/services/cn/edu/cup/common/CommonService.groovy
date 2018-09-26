@@ -7,11 +7,35 @@ import org.springframework.web.context.request.RequestContextHolder
 class CommonService {
 
     /*
-    * 从Excel文件中导入对象
+    * 数据导出服务：
+    * 将对象导出到Map
     * */
-    def importObjectFromExcelFile(Object object, File excelFile) {
-
-        return object
+    def exportObjectList2DataTable(Object object) {
+        def head = []
+        def data = []
+        if (object instanceof List) {
+            println("${object} 是List类型。")
+            if (object.size()>0) {
+                object[0].properties.each { e->
+                    head.add(e.key)
+                }
+                object.each { e->
+                    def row = []
+                    e.properties.each { ee->
+                        row.add(ee.value)
+                    }
+                    data.add(row)
+                }
+            }
+        } else {
+            println("${object}不是List")
+            object.properties.each {e->
+                head.add(e.key)
+                data.add(e.value)
+            }
+        }
+        def model = [head:head, data: data]
+        return model
     }
 
     /*
