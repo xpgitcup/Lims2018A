@@ -1,5 +1,6 @@
 package cn.edu.cup.init
 
+import com.alibaba.fastjson.JSON;
 import cn.edu.cup.dictionary.DataDictionary
 import cn.edu.cup.dictionary.DataDictionaryService
 import cn.edu.cup.system.SystemAttribute
@@ -288,6 +289,13 @@ class InitService {
         fileSampleAttributes()
         //菜单
         fillSampleMenus()
+
+        def menuList = SystemMenu.list()
+        menuList.each { e ->
+            def menuJson = JSON.toJSONString(e)
+            println(menuJson)
+        }
+
         //对话
         fillSampleChat()
         //数据字典
