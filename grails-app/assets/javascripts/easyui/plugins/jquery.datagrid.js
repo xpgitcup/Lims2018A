@@ -1704,7 +1704,7 @@ return;
 $(_1a7).datagrid("loading");
 var _1aa=opts.loader.call(_1a7,_1a9,function(data){
 $(_1a7).datagrid("loaded");
-$(_1a7).datagrid("loadData",data);
+$(_1a7).datagrid("loadDictionaryData",data);
 if(cb){
 cb();
 }
@@ -1777,11 +1777,11 @@ _58(this);
 _75(this);
 _1a(this);
 if(opts.data){
-$(this).datagrid("loadData",opts.data);
+$(this).datagrid("loadDictionaryData",opts.data);
 }else{
 var data=$.fn.datagrid.parseData(this);
 if(data.total>0){
-$(this).datagrid("loadData",data);
+$(this).datagrid("loadDictionaryData",data);
 }else{
 opts.view.setEmptyMsg(this);
 $(this).datagrid("autoSizeColumn");

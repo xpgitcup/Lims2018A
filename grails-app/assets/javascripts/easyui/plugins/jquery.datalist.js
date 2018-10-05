@@ -99,7 +99,7 @@ _1(this);
 if(!_23.options.data){
 var _25=$.fn.datalist.parseData(this);
 if(_25.total){
-$(this).datalist("loadData",_25);
+$(this).datalist("loadDictionaryData",_25);
 }
 }
 });

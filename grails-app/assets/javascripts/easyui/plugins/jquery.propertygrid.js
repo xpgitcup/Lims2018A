@@ -249,7 +249,7 @@ var dc=_4e.dc;
 var _50=null;
 var _51;
 if(!_4e.data.rows.length){
-$(_4c).datagrid("loadData",[row]);
+$(_4c).datagrid("loadDictionaryData",[row]);
 return;
 }
 for(var i=0;i<this.groups.length;i++){

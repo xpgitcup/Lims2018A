@@ -714,7 +714,7 @@ _cf=$.data(this,"treegrid",{options:$.extend({},$.fn.treegrid.defaults,$.fn.tree
 }
 _1(this);
 if(_cf.options.data){
-$(this).treegrid("loadData",_cf.options.data);
+$(this).treegrid("loadDictionaryData",_cf.options.data);
 }
 _15(this);
 });

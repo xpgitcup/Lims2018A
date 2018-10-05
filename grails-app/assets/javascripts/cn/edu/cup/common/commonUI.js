@@ -105,10 +105,6 @@ function tabPagesManager(tabsName, tabNameList, listFunction) {
 }
 
 function loadFirstData(title, listFunction) {
-    //var tabPagination = "paginationListAppsDiv" + title;
-    //var tp = $("#" + tabPagination);
-    //console.info("加载数据..." + tabPagination + tp);
-    //tp.pagination('refresh');
     var page = readCookie("curregtPage" + title, 1);
     var listFunction = eval(listFunction);
     listFunction(title, page, pageSize);
@@ -118,7 +114,6 @@ function loadFirstData(title, listFunction) {
 * 加载页面的数据
 * */
 function loadTabPageDefaultData(title, listFunction, countFunction) {
-
     console.info("加载缺省页面数据...");
 
     var countFunction = eval(countFunction);

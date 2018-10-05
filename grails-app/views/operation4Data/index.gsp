@@ -26,91 +26,31 @@
 <body>
 
 <div class="nav">
-    <g:if test="${session.currentDataDictionary}">
-        <ul>
-            <li>
-                <a href="#">
-                    当前字典：${session.currentDataDictionary}
-                </a>
-            </li>
-            <li>
-                <a class="create" href="operation4DataDictionary/clearCurrentDataDictionary">清除当前选择</a>
-            </li>
-        </ul>
-    </g:if>
+    <ul>
+        <li>
+            <a href="#">
+                当前字典：
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div id="currentDictionary"></div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                当前模型：
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div id="currentDataKey"></div>
+            </a>
+        </li>
+    </ul>
 </div>
 
-<div id="operation4DictionaryDiv" class="easyui-tabs">
-    <div title="数据字典">
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="create" href="javascript: createDataDictionary(0)">新建数据字典</a></li>
-            </ul>
-        </div>
-        <div class="container">
-            <div class="row-fluid">
-                <div class="col-md-6 column">
-                    <div class="panel panel-default">
-                        <div class="easyui-panel">
-                            <div id="listDataDictionaryDiv"></div>
-                            <div id="paginationListDataDictionaryDiv"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 column">
-                    <div class="panel panel-default">
-                        <div>
-                            <g:if test="${flash.message}">
-                                <div class="message" role="status">${flash.message}</div>
-                            </g:if>
-                        </div>
-                        <div class="easyui-panel">
-                            <div id="showDataDictionaryDiv"></div>
-                            <div id="editDataDictionaryDiv"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div title="模型维护">
-        <div class="container">
-            <div class="col-md-6">
-                <div class="nav" role="navigation">
-                    <ul>
-                        <li><a class="create" href="javascript: createDataKeyA(0)">新建：根/模型节点</a></li>
-                        <li><a id="createDataKeyA" class="create" href="#">新建子节点</a></li>
-                    </ul>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="easyui-panel">
-                        <div id="displayTreeDataKeyADiv" class="easyui-tree"></div>
-                        <div id="paginationDataKeyADiv" class="easyui-pagination"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div>
-                    <g:if test="${flash.message}">
-                        <div class="message" role="status">${flash.message}</div>
-                    </g:if>
-                </div>
-                <div class="easyui-panel">
-                    <div id="showDataKeyADiv"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div title="模型编辑">
-        <div class="easyui-panel">
-            <div id="editDataKeyADiv"></div>
-        </div>
-    </div>
+<div id="operation4DataDiv" class="easyui-tabs">
 </div>
 </body>
 </html>

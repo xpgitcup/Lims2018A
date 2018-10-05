@@ -11,8 +11,6 @@ $(function(){
 
     var tabList = ["我在听", "我在说", "整体显示", "对话"]
 
-    //tabPagesManager("operation4SystemChatDiv", tabList, loadSystemChatData);
-
     tabPagesManagerWithPagination("operation4SystemChatDiv", tabList, loadSystemChatData, countSystemChatData);
 });
 

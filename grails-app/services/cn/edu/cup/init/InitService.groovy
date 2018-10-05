@@ -1,5 +1,6 @@
 package cn.edu.cup.init
 
+import cn.edu.cup.dictionary.DataKeyA
 import com.alibaba.fastjson.JSON;
 import cn.edu.cup.dictionary.DataDictionary
 import cn.edu.cup.dictionary.DataDictionaryService
@@ -21,6 +22,7 @@ class InitService {
     def dataDictionaryService
     def systemMenuService
     def commonService
+    def dataKeyAService
 
     //加载数据库初始化脚本
     def loadScripts(String dir) {
@@ -344,15 +346,24 @@ class InitService {
     }
 
     private void fillSampleDataKey() {
+
         println("测试数据字典的数据...")
-        def dataDictionary = new DataDictionary(
-                name: "测试性数据字典1"
-        )
-        dataDictionaryService.save(dataDictionary)
-        commonService.exportObjectList2DataTable(dataDictionary)
-        def dlist = DataDictionary.list()
-        def d = commonService.exportObjectList2DataTable(dlist)
-        println("${d}")
+        for (int i=0; i<20; i++) {
+            def dataDictionary = new DataDictionary(
+                    name: "测试性数据字典${i}"
+            )
+            dataDictionaryService.save(dataDictionary)
+            println("${dataDictionary}")
+            for (int j=0; j<i; j++) {
+                def nd = new DataKeyA(
+                        dataTag: "数据标签${i}${j}",
+                        upDataKey: null,
+                        dictionary: dataDictionary
+                )
+                println("${nd}")
+                dataKeyAService.save(nd)
+            }
+        }
     }
 
     private void fillSampleChat() {

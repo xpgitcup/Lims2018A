@@ -174,7 +174,7 @@ return jq.each(function(){
 var _36=$.data(this,"combotree").options;
 _36.data=_35;
 var _37=$.data(this,"combotree").tree;
-_37.tree("loadData",_35);
+_37.tree("loadDictionaryData",_35);
 });
 },reload:function(jq,url){
 return jq.each(function(){
